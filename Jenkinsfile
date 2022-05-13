@@ -29,7 +29,7 @@ pipeline {
         stage('Ontwikkel') {
             agent { 
                 node { 
-                    label 'build-dev' 
+                    label 'Dev' 
                 } 
             }
             stages {
