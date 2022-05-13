@@ -78,6 +78,7 @@ pipeline {
                                 sh "terraform apply -input=false tfplan"
                             }
                         }
+                    }
                 }
                 stage ('Installeren Presentatielaag servers') {
                     steps {
