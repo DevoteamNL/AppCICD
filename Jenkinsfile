@@ -35,7 +35,7 @@ pipeline {
             stages {
                 stage ('Gegevens verzamelen') {
                     steps {
-                        collect_vars("Ontwikkel", ${gitCommit})
+                        collect_vars("Ontwikkel", "${gitCommit}")
                     }
                 }
                 stage ('Overschakelen op build node') {
