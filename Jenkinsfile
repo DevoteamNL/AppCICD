@@ -73,11 +73,11 @@ pipeline {
                             }
                         }
 
-                        stage('Apply') {
-                            steps {
-                                sh "terraform apply -input=false tfplan"
-                            }
-                        }
+                        // stage('Apply') {
+                        //     steps {
+                        //         sh "terraform apply -input=false tfplan"
+                        //     }
+                        // }
                     }
                 }
                 stage ('Installeren Presentatielaag servers') {
@@ -104,7 +104,7 @@ pipeline {
                 stage('Smoke test') {
                     steps {
                         script {
-                            sh "robot -d results -i Smoke -v BROWSER:chrome test_suites"
+                            sh "robot --variable VALID_PASSWORD:${thisSecret} -d  test_results -i Smoke smoketest.robot"
                             currentBuild.result = 'SUCCESS'
                         }
                     }
@@ -141,7 +141,7 @@ pipeline {
     }
 }
 
-def collect_vars(env) {
+def collect_vars(my_env) {
     script {
         // Set global variables
         gitCommit = "${env.GIT_COMMIT[0..7]}"
