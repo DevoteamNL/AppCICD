@@ -1,4 +1,0 @@
-version: '1'
-services:
-    prov:
-      swagger-url: /home/marks/github/bisportal/prov.yaml
