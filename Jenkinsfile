@@ -51,28 +51,9 @@ pipeline {
                                     currentBuild.displayName = params.version
                                 }
                                 sh 'terraform init -input=false'
-                                sh 'terraform workspace select ${environment}'
-                                sh "terraform plan -input=false -out tfplan -var 'version=${params.version}' --var-file=environments/${params.environment}.tfvars"
-                                sh 'terraform show -no-color tfplan > tfplan.txt'
+                                sh "terraform plan -input=false'
                             }
                         }
-
-                        stage('Approval') {
-                            when {
-                                not {
-                                    equals expected: true, actual: params.autoApprove
-                                }
-                            }
-
-                            steps {
-                                script {
-                                    def plan = readFile 'tfplan.txt'
-                                    input message: "Do you want to apply the plan?",
-                                        parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-                                }
-                            }
-                        }
-
                         // stage('Apply') {
                         //     steps {
                         //         sh "terraform apply -input=false tfplan"

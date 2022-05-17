@@ -1,0 +1,6 @@
+---
+ansible_host: 10.255.1.141
+lo0: 192.168.0.141
+name: FE1
+snmp_location: FE1 Location
+...
