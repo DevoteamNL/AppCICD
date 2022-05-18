@@ -33,14 +33,14 @@ pipeline {
                 } 
             }
             stages {
-                stage ('Gegevens verzamelen') {
+                stage ('Collect data') {
                     steps {
-                        collect_vars("Ontwikkel")
+                        collect_vars("Dev", "Dev")
                     }
                 }
-                stage ('Overschakelen op build node') {
+                stage ('Switch to build node') {
                     steps {
-                        prepare("Ontwikkel", "${gitCommit}")
+                        prepare("${this_stage}", "${gitCommit}")
                     }
                 }
                 stage ('Deploy infra') {
@@ -51,7 +51,7 @@ pipeline {
                                     currentBuild.displayName = params.version
                                 }
                                 sh 'terraform init -input=false'
-                                sh "terraform plan -input=false'
+                                sh 'terraform plan -input=false'
                             }
                         }
                         // stage('Apply') {
@@ -61,25 +61,22 @@ pipeline {
                         // }
                     }
                 }
-                stage ('Installeren Presentatielaag servers') {
+                stage ('Installing Presentation layer servers') {
                     steps {
-                        echo "Start applicatieinstallatie Ontwikkelomgeving Presentatielaag"
-                        collect_vars("Ontwikkel", "Presentatie")
-                        ansiblePlaybook installation: 'ansible', inventory: "vars/ontwikkel", playbook: 'ontwikkel.yml', extraVars: ["omgeving": "Ontwikkel", "compartiment": "Presentatie"], extras: '-vvvv'
+                        echo "Start Application Installation ${this_stage} Presentation layer"
+                        startplaybook("${this_stage}","Presentation")
                     }
                 }
-                stage ('Installeren Applicatielaag servers') {
+                stage ('Installing Application layer servers') {
                     steps {
-                        echo "Start applicatieinstallatie Ontwikkelomgeving Applicatielaag"
-                        collect_vars("Ontwikkel", "Applicatie")
-                        ansiblePlaybook installation: 'ansible', inventory: "vars/ontwikkel", playbook: 'ontwikkel.yml', extraVars: ["omgeving": "Ontwikkel", "compartiment": "Applicatie"], extras: '-vvvv'
+                        echo "Start Application Installation ${this_stage} Application layer"
+                        startplaybook("${this_stage}","Application")
                     }
                 }
-                stage ('Installeren Datalaag servers') {
+                stage ('Installing Data layer servers') {
                     steps {
-                        echo "Start applicatieinstallatie Ontwikkelomgeving Datalaag"
-                        collect_vars("Ontwikkel", "Presentatie")
-                        ansiblePlaybook installation: 'ansible', inventory: "vars/ontwikkel", playbook: 'ontwikkel.yml', extraVars: ["omgeving": "Ontwikkel", "compartiment": "Presentatie"], extras: '-vvvv'
+                        echo "Start Application Installation ${this_stage} Data layer"
+                        startplaybook("${this_stage}","Data")
                     }
                 }
                 stage('Smoke test') {
@@ -90,7 +87,7 @@ pipeline {
                         }
                     }
                 }
-                stage ('Opruimen') {
+                stage ('Cleaning...') {
                     steps {
                         cleanup("Ontwikkel", "${gitCommit}", "${cml_token}")
                     }
@@ -122,10 +119,11 @@ pipeline {
     }
 }
 
-def collect_vars(my_env) {
+def collect_vars(stage, my_env) {
     script {
         // Set global variables
         gitCommit = "${env.GIT_COMMIT[0..7]}"
+        this_stage= "${stage}"
     }                       
     echo "De commit is op branch ${env.JOB_NAME}, met short ID: ${gitCommit}"
     echo 'Aanmaken Jenkins Agent'
@@ -164,6 +162,11 @@ def stopagent(branch, build, commit) {
     sh 'curl -L -s -o /dev/null -u ' + "${JENKINS_CRED}" + ' -H "Content-Type:application/x-www-form-urlencoded" -X POST "' + "${env.JENKINS_URL}" + 'computer/' + "${GIT_REPO_NAME}" + "-" + "${branch}" + "-" + "${commit}" + '/doDelete"'
     
     return null
+}
+
+def startplaybook(stage,compartiment) {
+    ansiblePlaybook installation: 'ansible', inventory: "vars/${stage}", playbook: "${stage}.yml", extraVars: ["omgeving": "${stage}", "compartiment": "${compartiment}"], extras: '-vvvv'
+
 }
 
 def cleanup(env, commit, token) {

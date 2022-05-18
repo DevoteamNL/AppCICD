@@ -6,9 +6,10 @@
 # First steps                                                      #
 ####################################################################
 - name: "Installing some App"
+  debug: msg="Installing Some App"
 #  when: <some condition>
-#  notify:                                                                                         
-#    - someApp_smoke
+  notify:                                                                                         
+    - someApp_smoke
 
 ####################################################################
 # And then something else                                          #
