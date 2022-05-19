@@ -9,6 +9,8 @@ gitCommit = ""
 cml_token = "12345"
 thisSecret = "verysecret"
 agentName = ""
+this_branch = ""
+this_build = ""
 
 pipeline {
     agent none
@@ -82,7 +84,7 @@ pipeline {
                 stage('Smoke test') {
                     steps {
                         script {
-                            sh "robot --variable VALID_PASSWORD:${thisSecret} -d  test_results -i Smoke smoketest.robot"
+                            sh "robot --variable VALID_PASSWORD:${thisSecret} -d  test_results --variable NODE:PS1 --variable STAGE:Dev robot/smoketest.robot"
                             currentBuild.result = 'SUCCESS'
                         }
                     }
@@ -124,6 +126,8 @@ def collect_vars(stage, my_env) {
         // Set global variables
         gitCommit = "${env.GIT_COMMIT[0..7]}"
         this_stage= "${stage}"
+        this_branch="${env.BRANCH_NAME}"
+        this_build="${env.BUILD_tag}"
     }                       
     echo "De commit is op branch ${env.JOB_NAME}, met short ID: ${gitCommit}"
     echo 'Aanmaken Jenkins Agent'
@@ -173,7 +177,7 @@ def cleanup(env, commit, token) {
     echo "Overschakelen naar jenkins agent: ${env}"
 
     echo 'Verwijderen Jenkins Agent'
-    stopagent("${env.BRANCH_NAME}","${env.BUILD_tag}","${commit}")
+    stopagent("${this_branch}","${this_build}","${commit}")
     /* clean up our workspace */
     deleteDir() 
     return null
