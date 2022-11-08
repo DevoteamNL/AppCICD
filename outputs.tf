@@ -27,3 +27,7 @@ output "myEnv_mask" {
     description = "Subnet Mask of the generated Application environment"
     value       = prov_environments.MyEnv.mask
 }
+
+output hostnames {
+  value = [for x in module.server : x.hostname]
+}

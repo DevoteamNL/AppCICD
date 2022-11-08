@@ -58,3 +58,14 @@ variable "Server" {
         status      = "RFS"
     }
 }
+
+variable "Azure_serversizes" {
+  type        = map(string)
+  default = {
+    "S"     = "Standard_B1s"
+    "M"     = "Standard_B1s"
+    "L"     = "Standard_B1s"
+    "XL"    = "Standard_B1s"
+  }
+}
+
