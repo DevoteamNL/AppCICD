@@ -1,2 +1,7 @@
-variable "tenant" {}
-variable "location" {}
+variable "tenant" {
+    type    = string
+}
+
+variable "location" {
+    type    = string
+}

@@ -9,5 +9,5 @@ module "tenant_onprem" {
     source               = "../tenant_onprem"
     count                = var.prov == "mydc" ? 1 : 0
     name                 = var.name
-    party                = var.region
+    party                = var.name
 }
