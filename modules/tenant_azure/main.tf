@@ -1,4 +1,6 @@
-resource "azurerm_resource_group" "tenant" {
+resource "azurerm_resource_group" "MyTenant" {
   name     = var.tenant
-  location = var.environment.region
+  location = var.location
 }
+
+# id exported

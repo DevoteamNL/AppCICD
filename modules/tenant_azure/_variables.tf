@@ -1,2 +1,2 @@
-variable "name" {}
+variable "tenant" {}
 variable "location" {}

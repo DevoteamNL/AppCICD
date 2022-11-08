@@ -10,12 +10,12 @@ variable "application" {
 
 variable "environment" {
   description = "Environment type: Dev, Test, Acc or Prod"
-  type        = map(object({
+  type = object({
     name = string
     cloudprovider = string
     region = string
     availability_zone = string
-  }))
+  })
 }
 
 variable "compartments" {
@@ -33,7 +33,8 @@ variable "servers" {
     name = string
     size = string
     compartment = string
-    os = string
+    OS = string
+    role = string
   }))
 }
 
