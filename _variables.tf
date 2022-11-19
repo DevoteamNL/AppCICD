@@ -19,10 +19,11 @@ variable "environment" {
 }
 
 variable "compartments" {
-  description = "Map containing Applocation environment network compartments, following 3 tier model of P/A/D: Presentation, Application, Data, Presentation-Appplication, Application-Data, Presentation-Application-Data"
+  description = "Map containing compartments"
   type = map(object({
-    type             = string
+    name             = string
     size             = number
+    address_prefixes = list(string)
   }))
 }
 
