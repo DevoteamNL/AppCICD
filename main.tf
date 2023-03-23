@@ -1,60 +1,109 @@
-terraform {
-  required_providers {
-    prov = {
-      source  = "prov.tooling.test/tooling/prov"
-      version = ">= 0.0.1"
-    }
-  }
+module "tenants" {
+    source               = "./modules/services/tenants"
+    prov                 = var.environment.cloudprovider
+    name                 = var.tenant
+    description          = var.tenant
+    status               = "Operational"
+    centercode           = var.environment.centercode
+    change               = var.environment.change
+    view                 = var.environment.view
+    managementR          = var.environment.management-r
+    managementA          = var.environment.management-a
+    managementI          = var.environment.management-i
+    developer            = var.environment.developer
 }
 
-provider "prov" {}
+module "applications" {
+    source               = "./modules/services/applications"
+    prov                 = var.environment.cloudprovider
+    name                 = var.tenant
+    description          = var.tenant
+    apptenant            = module.tenants.id
+    status               = "Operational"
+    centercode           = var.environment.centercode
+    change               = var.environment.change
+    view                 = var.environment.view
+    managementR          = var.environment.management-r
+    managementA          = var.environment.management-a
+    managementI          = var.environment.management-i
+    developer            = var.environment.developer
 
-# data "prov_images_instance" "frontend" {
-#   # most_recent = true
-#   # filter {
-#   #   name = "os"
-#   #   values = [var.Server.os]
-#   # }
-#   id = "resourceID"
-# }
-
-resource "prov_tenants" "MyTenant" {
-  name       = var.Tenant
-  party      = var.Contract.name
-  lifecycle {
-    prevent_destroy = true
-  }
+    depends_on = [
+    module.tenants
+  ]
 }
 
-resource "prov_azs" "MyAZ" {
-  name        = var.AZ.name
-  region      = var.AZ.region
-  az          = var.AZ.az
-  party       = var.Contract.name
-  lifecycle {
-    prevent_destroy = true
-  }
+module "environments" {
+    source               = "./modules/services/environments"
+    prov                 = var.environment.cloudprovider
+    name                 = var.tenant
+    description          = var.tenant
+    etype                = var.environment.etype
+    cloudprovider        = var.environment.cloudprovider
+    region               = var.environment.region
+    az                   = var.environment.availability_zone
+    application          = module.applications.id
+    eversion             = var.environment.eversion
+    estatus              = "Operational"
+    centercode           = var.environment.centercode
+    change               = var.environment.change
+    view                 = var.environment.view
+    managementR          = var.environment.management-r
+    managementA          = var.environment.management-a
+    managementI          = var.environment.management-i
+    developer            = var.environment.developer
+
+    depends_on = [
+    module.applications
+    ]
 }
 
-resource "prov_applications" "MyApp" {
-  name        = var.Application.name
-  party       = var.Contract.name
-  status      = var.Application.status
+module "compartments" {
+    source               = "./modules/services/compartments"
+    prov                 = var.environment.cloudprovider
+    for_each             = var.compartments
+    name                 = each.value.name
+    description          = each.value.description
+    ctype                = each.value.ctype
+    cversion             = each.value.cversion
+    cstatus              = each.value.cstatus
+    environment          = module.environments.id
+    centercode           = each.value.centercode
+    change               = each.value.change
+    view                 = each.value.view
+    managementR          = each.value.management-r
+    managementA          = each.value.management-a
+    managementI          = each.value.management-i
+    developer            = each.value.developer
+    numofservers         = each.value.numofservers
+    addressing           = each.value.addressing
+
+    depends_on = [
+    module.environments
+    ]
 }
 
-resource "prov_environments" "MyEnv" {
-  name        = var.Application.name
-  party       = var.Contract.name
-  pod         = var.Environment.pod
-  nos         = var.Environment.nos
-  status      = var.Application.status
-}
+module "servers" {
+    source               = "./modules/services/servers"
+    prov                 = var.environment.cloudprovider
+    for_each             = var.servers
+    name                 = each.value.name
+    description          = each.value.description
+    compartment          = each.value.compartment
+    size                 = each.value.size
+    serverrole           = each.value.serverrole
+    image                = each.value.image
+    sversion             = each.value.sversion
+    sstatus              = each.value.sstatus
+    centercode           = each.value.centercode
+    change               = each.value.change
+    view                 = each.value.view
+    managementR          = each.value.management-r
+    managementA          = each.value.management-a
+    managementI          = each.value.management-i
+    developer            = each.value.developer
 
-resource "prov_servers" "MyComputer" {
-  name        = var.Server.name
-  count       = var.Server.count
-  env         = var.Server.env
-  size        = var.Server.size
-  #image       = data.prov_images_instance.frontend.id
-  status      = var.Server.status
+    depends_on = [
+    module.compartments
+    ]
 }
