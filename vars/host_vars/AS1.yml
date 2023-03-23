@@ -1,6 +1,0 @@
----
-ansible_host: 10.255.1.151
-lo0: 192.168.0.151
-name: AS1
-snmp_location: AS1 Location
-...

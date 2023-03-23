@@ -1,48 +1,90 @@
 variable "tenant" {
-  description = "Tenant"
-  type        = string
+    type    = string
 }
-
+variable "name" {
+    type    = string
+}
 variable "application" {
-  description = "Application name"
-  type        = string
+    type    = string
+}
+variable "prov" {
+    type    = string
 }
 
 variable "environment" {
-  description = "Environment type: Dev, Test, Acc or Prod"
-  type = object({
-    name = string
-    cloudprovider = string
-    region = string
-    availability_zone = string
-  })
+    type    = object ({
+        etype               = string, 
+        cloudprovider       = string,
+        region              = string,
+        availability_zone   = string,
+        name                = string,
+        eversion            = string,
+        created             = string,
+        updated             = string,
+        last_change         = string,
+        centercode          = string,
+        change              = string,
+        view                = string,
+        management-r        = string,
+        management-a        = string,
+        management-i        = string,
+        developer           = string
+        })              
 }
 
 variable "compartments" {
-  description = "Map containing compartments"
-  type = map(object({
-    name             = string
-    size             = number
-    address_prefixes = list(string)
-  }))
+    type = map(object({
+            name                = string,
+            description         = string,
+            ctype               = string,
+            cversion            = string,
+            cstatus             = string,
+            environment         = string,
+            created             = string,
+            updated             = string,
+            last_change         = string,
+            centercode          = string,
+            change              = string,
+            view                = string,
+            management-r        = string,
+            management-a        = string,
+            management-i        = string,
+            developer           = string,
+            numofservers        = number,
+            addressing          = string
+            })            
+        )
+         
 }
 
 variable "servers" {
-  description = "Map containing servers: size following paradigm S/M/L/XL, OS: windows, Linux"
-  type = map(object({
-    number = string
-    name = string
-    size = string
-    compartment = string
-    OS = string
-    role = string
-  }))
+    type    = map(object({
+            name                = string, 
+            description         = string,
+            compartment         = string,
+            size                = string,
+            serverrole          = string,
+            image               = string,
+            sversion            = string,
+            sstatus             = string,
+            created             = string,
+            updated             = string,
+            last_change         = string,
+            centercode          = string,
+            change              = string,
+            view                = string,
+            management-r        = string,
+            management-a        = string,
+            management-i        = string,
+            developer           = string
+        })
+    )
 }
 
 variable "conduits" {
-  description = "Unidirectional traffic flows."
+    type    = object ({})
 }
 
 variable "databases" {
-  description = "Unidirectional traffic flows."
+    type    = object ({})
 }
