@@ -7,9 +7,6 @@ variable "name" {
 variable "application" {
     type    = string
 }
-variable "prov" {
-    type    = string
-}
 
 variable "environment" {
     type    = object ({
