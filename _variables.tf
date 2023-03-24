@@ -7,9 +7,7 @@ variable "name" {
 variable "application" {
     type    = string
 }
-variable "prov" {
-    type    = string
-}
+
 
 variable "environment" {
     type    = object ({
@@ -19,9 +17,6 @@ variable "environment" {
         availability_zone   = string,
         name                = string,
         eversion            = string,
-        created             = string,
-        updated             = string,
-        last_change         = string,
         centercode          = string,
         change              = string,
         view                = string,
@@ -40,9 +35,6 @@ variable "compartments" {
             cversion            = string,
             cstatus             = string,
             environment         = string,
-            created             = string,
-            updated             = string,
-            last_change         = string,
             centercode          = string,
             change              = string,
             view                = string,
@@ -67,9 +59,6 @@ variable "servers" {
             image               = string,
             sversion            = string,
             sstatus             = string,
-            created             = string,
-            updated             = string,
-            last_change         = string,
             centercode          = string,
             change              = string,
             view                = string,
