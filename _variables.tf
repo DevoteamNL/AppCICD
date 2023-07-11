@@ -1,9 +1,29 @@
+variable "cml_url" {
+  description = "CML controller address"
+  type        = string
+  default     = "https://cml.tooling.provider.test"
+}
+
+variable "cml_username" {
+  description = "cml2 username"
+  type        = string
+  default     = "developer"
+}
+
+variable "cml_password" {
+  description = "cml2 password"
+  type        = string
+  sensitive   = true
+} 
+
 variable "tenant" {
     type    = string
 }
+
 variable "name" {
     type    = string
 }
+
 variable "application" {
     type    = string
 }
