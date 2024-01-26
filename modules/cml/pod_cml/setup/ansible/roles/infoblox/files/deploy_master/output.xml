@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.12 on linux)" generated="20231201 19:01:31.499" rpa="false" schemaversion="4">
+<suite id="s1" name="Infoblox Gridmaster 1" source="/home/marks/github_myref/AppCICD-core/modules/cml/pod_cml/setup/ansible/roles/infoblox/files/deploy_master/infoblox_gridmaster_1.robot">
+<kw name="Open Browser" library="SeleniumLibrary" type="SETUP">
+<arg>https://${ib_gm_vip}</arg>
+<arg>${BROWSER1}</arg>
+<arg>remote_url=http://172.17.0.2:4444</arg>
+<arg>options=add_argument("--ignore-certificate-errors")</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231201 19:01:31.661" level="INFO">Opening browser 'firefox' to base url 'https://192.168.32.50' through remote server at 'http://172.17.0.2:4444'.</msg>
+<msg timestamp="20231201 19:01:34.729" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936d70&gt;: Failed to establish a new connection: [Errno 113] No route to host')': /session</msg>
+<msg timestamp="20231201 19:01:37.805" level="WARN">Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f45459366b0&gt;: Failed to establish a new connection: [Errno 113] No route to host')': /session</msg>
+<msg timestamp="20231201 19:01:40.873" level="WARN">Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936dd0&gt;: Failed to establish a new connection: [Errno 113] No route to host')': /session</msg>
+<msg timestamp="20231201 19:01:43.945" level="INFO">Cannot capture screenshot because no browser is open.</msg>
+<msg timestamp="20231201 19:01:43.945" level="FAIL">MaxRetryError: HTTPConnectionPool(host='172.17.0.2', port=4444): Max retries exceeded with url: /session (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936ec0&gt;: Failed to establish a new connection: [Errno 113] No route to host'))</msg>
+<status status="FAIL" starttime="20231201 19:01:31.660" endtime="20231201 19:01:43.959"/>
+</kw>
+<test id="s1-t1" name="Infoblox Login" line="28">
+<status status="FAIL" starttime="20231201 19:01:43.959" endtime="20231201 19:01:43.959">Parent suite setup failed:
+MaxRetryError: HTTPConnectionPool(host='172.17.0.2', port=4444): Max retries exceeded with url: /session (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936ec0&gt;: Failed to establish a new connection: [Errno 113] No route to host'))</status>
+</test>
+<test id="s1-t2" name="Infoblox EULA and Data Collection" line="31">
+<status status="FAIL" starttime="20231201 19:01:43.960" endtime="20231201 19:01:43.960">Parent suite setup failed:
+MaxRetryError: HTTPConnectionPool(host='172.17.0.2', port=4444): Max retries exceeded with url: /session (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936ec0&gt;: Failed to establish a new connection: [Errno 113] No route to host'))</status>
+</test>
+<test id="s1-t3" name="Grid Setup" line="35">
+<status status="FAIL" starttime="20231201 19:01:43.960" endtime="20231201 19:01:43.960">Parent suite setup failed:
+MaxRetryError: HTTPConnectionPool(host='172.17.0.2', port=4444): Max retries exceeded with url: /session (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936ec0&gt;: Failed to establish a new connection: [Errno 113] No route to host'))</status>
+</test>
+<kw name="Close Browser" library="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231201 19:01:43.961" endtime="20231201 19:01:43.961"/>
+</kw>
+<doc>grid name
+Shared Secret
+Shared Secret Retype
+VPN port -&gt; 1194 ...
+advanced:
+Enable GUI Redirect from Member -&gt; on //*[@id="idae"]/html/body/div[25]/div[2]/div[1]/div/div/div/div[2]/div/div/div[1]/div/div/div/div/div/form/div[2]/div[1]/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/input
+Enable GUI/API Access via both MGMT and LAN1/VIP -&gt; off
+Enable Network Users Feature -&gt; on
+Enable Updates Of RIR Registrations -&gt; off
+Enable Informational GUI Banner -&gt; on
+Banner Color -&gt; Red
+Message -&gt; Infoblox test appliance for testing in CML
+Present the option of recursive deletion of networks or zones to -&gt; All Users
+Enable DNS Object Permissions in Networks and Ranges -&gt; off
+DSCP Value -&gt; 0
+Show Grid Visualization -&gt; on
+Show Restart Banner -&gt; on
+Require Name -&gt; off ...</doc>
+<status status="FAIL" starttime="20231201 19:01:31.500" endtime="20231201 19:01:43.961">Suite setup failed:
+MaxRetryError: HTTPConnectionPool(host='172.17.0.2', port=4444): Max retries exceeded with url: /session (Caused by NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936ec0&gt;: Failed to establish a new connection: [Errno 113] No route to host'))</status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="3" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="3" skip="0" id="s1" name="Infoblox Gridmaster 1">Infoblox Gridmaster 1</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20231201 19:01:31.657" level="ERROR">Error in file '/home/marks/github_myref/AppCICD-core/modules/cml/pod_cml/setup/ansible/roles/infoblox/files/deploy_master/infoblox_gridmaster_1.robot' on line 57: Setting variable '${ib_gm_grid}' failed: Environment variable '%{ib_grid}' not found.</msg>
+<msg timestamp="20231201 19:01:31.658" level="ERROR">Error in file '/home/marks/github_myref/AppCICD-core/modules/cml/pod_cml/setup/ansible/roles/infoblox/files/deploy_master/infoblox_gridmaster_1.robot' on line 58: Setting variable '${ib_gm_secret}' failed: Environment variable '%{ib_grid_secret}' not found.</msg>
+<msg timestamp="20231201 19:01:31.659" level="ERROR">Error in file '/home/marks/github_myref/AppCICD-core/modules/cml/pod_cml/setup/ansible/roles/infoblox/files/deploy_master/infoblox_gridmaster_1.robot' on line 59: Setting variable '${ib_host_name}' failed: Environment variable '%{ib_host_name}' not found.</msg>
+<msg timestamp="20231201 19:01:34.729" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936d70&gt;: Failed to establish a new connection: [Errno 113] No route to host')': /session</msg>
+<msg timestamp="20231201 19:01:37.805" level="WARN">Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f45459366b0&gt;: Failed to establish a new connection: [Errno 113] No route to host')': /session</msg>
+<msg timestamp="20231201 19:01:40.873" level="WARN">Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x7f4545936dd0&gt;: Failed to establish a new connection: [Errno 113] No route to host')': /session</msg>
+</errors>
+</robot>

@@ -10,7 +10,19 @@ variable "description" {
     type    = string
 }
 
-variable "apptenant" {
+variable "tenant" {
+    type    = string
+}
+
+variable "region" {
+    type    = string
+}
+
+variable "az" {
+    type    = string
+}
+
+variable "application" {
     type    = string
 }
 
@@ -22,26 +34,14 @@ variable "centercode" {
     type    = string
 }
 
-variable "change" {
+variable "read" {
     type    = string
 }
 
-variable "view" {
+variable "write" {
     type    = string
 }
 
-variable "managementR" {
-    type    = string
-}
-
-variable "managementA" {
-    type    = string
-}
-
-variable "managementI" {
-    type    = string
-}
-
-variable "developer" {
+variable "own" {
     type    = string
 }

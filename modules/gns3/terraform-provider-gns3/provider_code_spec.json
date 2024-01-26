@@ -1,0 +1,939 @@
+{
+	"provider": {
+		"name": "gns3"
+	},
+	"resources": [
+		{
+			"name": "compute",
+			"schema": {
+				"attributes": [
+					{
+						"name": "compute_id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "host",
+						"string": {
+							"computed_optional_required": "required"
+						}
+					},
+					{
+						"name": "name",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "password",
+						"string": {
+							"computed_optional_required": "computed_optional",
+							"sensitive": true
+						}
+					},
+					{
+						"name": "port",
+						"int64": {
+							"computed_optional_required": "required",
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+											}
+										],
+										"schema_definition": "int64validator.AtMost(65535)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "protocol",
+						"string": {
+							"computed_optional_required": "required",
+							"description": "Protocol supported to communicate with a compute.",
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+											}
+										],
+										"schema_definition": "stringvalidator.OneOf(\n\"http\",\n\"https\",\n)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "user",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "capabilities",
+						"single_nested": {
+							"computed_optional_required": "computed",
+							"attributes": [
+								{
+									"name": "cpus",
+									"int64": {
+										"computed_optional_required": "computed",
+										"description": "Number of CPUs on this compute"
+									}
+								},
+								{
+									"name": "disk_size",
+									"int64": {
+										"computed_optional_required": "computed",
+										"description": "Disk size on this compute"
+									}
+								},
+								{
+									"name": "memory",
+									"int64": {
+										"computed_optional_required": "computed",
+										"description": "Amount of memory on this compute"
+									}
+								},
+								{
+									"name": "node_types",
+									"list": {
+										"computed_optional_required": "computed",
+										"element_type": {
+											"string": {}
+										},
+										"description": "Node types supported by the compute"
+									}
+								},
+								{
+									"name": "platform",
+									"string": {
+										"computed_optional_required": "computed",
+										"description": "Platform where the compute is running (Linux, Windows or macOS)"
+									}
+								},
+								{
+									"name": "version",
+									"string": {
+										"computed_optional_required": "computed",
+										"description": "Compute version number"
+									}
+								}
+							],
+							"description": "Capabilities supported by a compute."
+						}
+					},
+					{
+						"name": "connected",
+						"bool": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "cpu_usage_percent",
+						"number": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "created_at",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "disk_usage_percent",
+						"number": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "last_error",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "memory_usage_percent",
+						"number": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "updated_at",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		},
+		{
+			"name": "link",
+			"schema": {
+				"attributes": [
+					{
+						"name": "filters",
+						"single_nested": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "link_id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "link_style",
+						"single_nested": {
+							"computed_optional_required": "computed_optional",
+							"attributes": [
+								{
+									"name": "color",
+									"string": {
+										"computed_optional_required": "computed_optional"
+									}
+								},
+								{
+									"name": "type",
+									"int64": {
+										"computed_optional_required": "computed_optional"
+									}
+								},
+								{
+									"name": "width",
+									"int64": {
+										"computed_optional_required": "computed_optional"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "nodes",
+						"list_nested": {
+							"computed_optional_required": "required",
+							"nested_object": {
+								"attributes": [
+									{
+										"name": "adapter_number",
+										"int64": {
+											"computed_optional_required": "required"
+										}
+									},
+									{
+										"name": "label",
+										"single_nested": {
+											"computed_optional_required": "computed_optional",
+											"attributes": [
+												{
+													"name": "rotation",
+													"int64": {
+														"computed_optional_required": "computed_optional",
+														"validators": [
+															{
+																"custom": {
+																	"imports": [
+																		{
+																			"path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+																		}
+																	],
+																	"schema_definition": "int64validator.Between(-359, 360)"
+																}
+															}
+														]
+													}
+												},
+												{
+													"name": "style",
+													"string": {
+														"computed_optional_required": "computed_optional"
+													}
+												},
+												{
+													"name": "text",
+													"string": {
+														"computed_optional_required": "required"
+													}
+												},
+												{
+													"name": "x",
+													"int64": {
+														"computed_optional_required": "computed_optional"
+													}
+												},
+												{
+													"name": "y",
+													"int64": {
+														"computed_optional_required": "computed_optional"
+													}
+												}
+											],
+											"description": "Label data."
+										}
+									},
+									{
+										"name": "node_id",
+										"string": {
+											"computed_optional_required": "required"
+										}
+									},
+									{
+										"name": "port_number",
+										"int64": {
+											"computed_optional_required": "required"
+										}
+									}
+								]
+							},
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+											}
+										],
+										"schema_definition": "listvalidator.SizeBetween(2, 2)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "suspend",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "capture_compute_id",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "capture_file_name",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "capture_file_path",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "capturing",
+						"bool": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "link_type",
+						"string": {
+							"computed_optional_required": "computed",
+							"description": "Link type."
+						}
+					},
+					{
+						"name": "project_id",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		},
+		{
+			"name": "node",
+			"schema": {
+				"attributes": [
+					{
+						"name": "aux",
+						"int64": {
+							"computed_optional_required": "computed_optional",
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+											}
+										],
+										"schema_definition": "int64validator.AtMost(65535)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "aux_type",
+						"string": {
+							"computed_optional_required": "computed_optional",
+							"description": "Supported console types.",
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+											}
+										],
+										"schema_definition": "stringvalidator.OneOf(\n\"vnc\",\n\"telnet\",\n\"http\",\n\"https\",\n\"spice\",\n\"spice+agent\",\n\"none\",\n)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "compute_id",
+						"string": {
+							"computed_optional_required": "required"
+						}
+					},
+					{
+						"name": "console",
+						"int64": {
+							"computed_optional_required": "computed_optional",
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+											}
+										],
+										"schema_definition": "int64validator.AtMost(65535)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "console_auto_start",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "console_type",
+						"string": {
+							"computed_optional_required": "computed_optional",
+							"description": "Supported console types.",
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+											}
+										],
+										"schema_definition": "stringvalidator.OneOf(\n\"vnc\",\n\"telnet\",\n\"http\",\n\"https\",\n\"spice\",\n\"spice+agent\",\n\"none\",\n)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "custom_adapters",
+						"list_nested": {
+							"computed_optional_required": "computed_optional",
+							"nested_object": {
+								"attributes": [
+									{
+										"name": "adapter_number",
+										"int64": {
+											"computed_optional_required": "required"
+										}
+									},
+									{
+										"name": "adapter_type",
+										"string": {
+											"computed_optional_required": "computed_optional"
+										}
+									},
+									{
+										"name": "mac_address",
+										"string": {
+											"computed_optional_required": "computed_optional",
+											"validators": [
+												{
+													"custom": {
+														"imports": [
+															{
+																"path": "regexp"
+															},
+															{
+																"path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+															}
+														],
+														"schema_definition": "stringvalidator.RegexMatches(regexp.MustCompile(\"^([0-9a-fA-F]{2}[:]){5}([0-9a-fA-F]{2})$\"), \"\")"
+													}
+												}
+											]
+										}
+									},
+									{
+										"name": "port_name",
+										"string": {
+											"computed_optional_required": "computed_optional"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"name": "first_port_name",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "label",
+						"single_nested": {
+							"computed_optional_required": "computed_optional",
+							"attributes": [
+								{
+									"name": "rotation",
+									"int64": {
+										"computed_optional_required": "computed_optional",
+										"validators": [
+											{
+												"custom": {
+													"imports": [
+														{
+															"path": "github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+														}
+													],
+													"schema_definition": "int64validator.Between(-359, 360)"
+												}
+											}
+										]
+									}
+								},
+								{
+									"name": "style",
+									"string": {
+										"computed_optional_required": "computed_optional"
+									}
+								},
+								{
+									"name": "text",
+									"string": {
+										"computed_optional_required": "required"
+									}
+								},
+								{
+									"name": "x",
+									"int64": {
+										"computed_optional_required": "computed_optional"
+									}
+								},
+								{
+									"name": "y",
+									"int64": {
+										"computed_optional_required": "computed_optional"
+									}
+								}
+							],
+							"description": "Label data."
+						}
+					},
+					{
+						"name": "locked",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "name",
+						"string": {
+							"computed_optional_required": "required"
+						}
+					},
+					{
+						"name": "node_id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "node_type",
+						"string": {
+							"computed_optional_required": "required",
+							"description": "Supported node types.",
+							"validators": [
+								{
+									"custom": {
+										"imports": [
+											{
+												"path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+											}
+										],
+										"schema_definition": "stringvalidator.OneOf(\n\"cloud\",\n\"nat\",\n\"ethernet_hub\",\n\"ethernet_switch\",\n\"frame_relay_switch\",\n\"atm_switch\",\n\"docker\",\n\"dynamips\",\n\"vpcs\",\n\"virtualbox\",\n\"vmware\",\n\"iou\",\n\"qemu\",\n)"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "port_name_format",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "port_segment_size",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "properties",
+						"single_nested": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "symbol",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "x",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "y",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "z",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "command_line",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "console_host",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "height",
+						"int64": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "node_directory",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "ports",
+						"list_nested": {
+							"computed_optional_required": "computed",
+							"nested_object": {
+								"attributes": [
+									{
+										"name": "adapter_number",
+										"int64": {
+											"computed_optional_required": "computed",
+											"description": "Adapter slot"
+										}
+									},
+									{
+										"name": "adapter_type",
+										"string": {
+											"computed_optional_required": "computed"
+										}
+									},
+									{
+										"name": "data_link_types",
+										"single_nested": {
+											"computed_optional_required": "computed",
+											"description": "Available PCAP types for capture"
+										}
+									},
+									{
+										"name": "link_type",
+										"string": {
+											"computed_optional_required": "computed",
+											"description": "Type of link"
+										}
+									},
+									{
+										"name": "mac_address",
+										"string": {
+											"computed_optional_required": "computed"
+										}
+									},
+									{
+										"name": "name",
+										"string": {
+											"computed_optional_required": "computed",
+											"description": "Port name"
+										}
+									},
+									{
+										"name": "port_number",
+										"int64": {
+											"computed_optional_required": "computed",
+											"description": "Port slot"
+										}
+									},
+									{
+										"name": "short_name",
+										"string": {
+											"computed_optional_required": "computed",
+											"description": "Port name"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"name": "project_id",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "status",
+						"string": {
+							"computed_optional_required": "computed",
+							"description": "Supported node statuses."
+						}
+					},
+					{
+						"name": "template_id",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "width",
+						"int64": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		},
+		{
+			"name": "project",
+			"schema": {
+				"attributes": [
+					{
+						"name": "auto_close",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "auto_open",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "auto_start",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "drawing_grid_size",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "grid_size",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "name",
+						"string": {
+							"computed_optional_required": "required"
+						}
+					},
+					{
+						"name": "path",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "project_id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "scene_height",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "scene_width",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "show_grid",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "show_interface_labels",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "show_layers",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "snap_to_grid",
+						"bool": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "supplier",
+						"single_nested": {
+							"computed_optional_required": "computed_optional",
+							"attributes": [
+								{
+									"name": "logo",
+									"string": {
+										"computed_optional_required": "required",
+										"description": "Path to the project supplier logo"
+									}
+								},
+								{
+									"name": "url",
+									"string": {
+										"computed_optional_required": "computed_optional",
+										"validators": [
+											{
+												"custom": {
+													"imports": [
+														{
+															"path": "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+														}
+													],
+													"schema_definition": "stringvalidator.LengthBetween(1, 2083)"
+												}
+											}
+										]
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "variables",
+						"list_nested": {
+							"computed_optional_required": "computed_optional",
+							"nested_object": {
+								"attributes": [
+									{
+										"name": "name",
+										"string": {
+											"computed_optional_required": "required",
+											"description": "Variable name"
+										}
+									},
+									{
+										"name": "value",
+										"string": {
+											"computed_optional_required": "computed_optional"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"name": "zoom",
+						"int64": {
+							"computed_optional_required": "computed_optional"
+						}
+					},
+					{
+						"name": "filename",
+						"string": {
+							"computed_optional_required": "computed"
+						}
+					},
+					{
+						"name": "status",
+						"string": {
+							"computed_optional_required": "computed",
+							"description": "Supported project statuses."
+						}
+					},
+					{
+						"name": "id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		}
+	],
+	"version": "0.1"
+}

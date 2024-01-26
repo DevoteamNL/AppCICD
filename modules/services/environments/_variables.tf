@@ -18,6 +18,10 @@ variable "cloudprovider" {
     type    = string
 }
 
+variable "compartments" {}
+
+variable "children" {}
+
 variable "region" {
     type    = string
 }
@@ -42,26 +46,14 @@ variable "centercode" {
     type    = string
 }
 
-variable "change" {
+variable "read" {
     type    = string
 }
 
-variable "view" {
+variable "write" {
     type    = string
 }
 
-variable "managementR" {
-    type    = string
-}
-
-variable "managementA" {
-    type    = string
-}
-
-variable "managementI" {
-    type    = string
-}
-
-variable "developer" {
+variable "own" {
     type    = string
 }

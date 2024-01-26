@@ -1,0 +1,77 @@
+provider:
+  name: gns3
+resources:
+  project:
+    create:
+      path: /v3/projects
+      method: POST
+    read:
+      path: /v3/projects/{project_id}
+      method: GET
+    update:
+      path: /v3/projects/{project_id}
+      method: PUT
+    delete:
+      path: /v3/projects/{project_id}
+      method: DELETE
+    schema:
+      attributes:
+        aliases:
+          project_id: id
+  node:
+    create:
+      path: /v3/projects/{project_id}/nodes
+      method: POST
+    read:
+      path: /v3/projects/{project_id}/nodes/{node_id}
+      method: GET
+    update:
+      path: /v3/projects/{project_id}/nodes/{node_id}
+      method: PUT
+    delete:
+      path: /v3/projects/{project_id}/nodes/{node_id}
+      method: DELETE
+    start:
+      path: /v3/projects/{project_id}/nodes/{node_id}/start
+      method: PUT
+    stop:
+      path: /v3/projects/{project_id}/nodes/{node_id}/stop
+      method: DELETE
+    schema:
+      attributes:
+        aliases:
+          node_id: id
+  link:
+    create:
+      path: /v3/projects/{project_id}/links
+      method: POST
+    read:
+      path: /v3/projects/{project_id}/links/{link_id}
+      method: GET
+    update:
+      path: /v3/projects/{project_id}/links/{link_id}
+      method: PUT
+    delete:
+      path: /v3/projects/{project_id}/links/{link_id}
+      method: DELETE
+    schema:
+      attributes:
+        aliases:
+          link_id: id
+  compute:
+    create:
+      path: /v3/computes
+      method: POST
+    read:
+      path: /v3/computes/{compute_id}
+      method: GET
+    update:
+      path: /v3/computes/{compute_id}
+      method: PUT
+    delete:
+      path: /v3/computes/{compute_id}
+      method: DELETE
+    schema:
+      attributes:
+        aliases:
+          compute_id: id

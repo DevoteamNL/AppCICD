@@ -1,15 +1,17 @@
-module "application_onprem" {
-    source               = "../../onprem/application_onprem"
-    count                = var.prov == "OnPrem" ? 1 : 0
-    name                 = var.name
-    description          = var.description
-    apptenant            = var.apptenant
-    status               = var.status
-    centercode           = var.centercode
-    change               = var.change
-    view                 = var.view
-    managementR          = var.managementR
-    managementA          = var.managementA
-    managementI          = var.managementI
-    developer            = var.developer
+module "application_azure" {
+    source               = "../../azure/application_azure"
+    count                = var.prov == "Azure" ? 1 : 0
+    application          = var.application
+    prov                 = var.prov
+    region               = var.region
+    az                   = var.az
+}
+
+module "application_cml" {
+    source               = "../../cml/application_cml"
+    count                = var.prov == "CML" ? 1 : 0
+    application          = var.application
+    prov                 = var.prov
+    region               = var.region
+    az                   = var.az
 }

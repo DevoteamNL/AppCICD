@@ -1,18 +1,9 @@
-module "conduit_onprem" {
-    source               = "../../onprem/conduit_onprem"
-    count                = var.prov == "OnPrem" ? 1 : 0
-    name                 = var.name
-    description          = var.description
-    ftype                = var.ftype
-    fsource              = var.fsource
-    fdestination         = var.fdestination
-    fversion             = var.fversion
-    fstatus              = var.fstatus
-    centercode           = var.centercode
-    change               = var.change
-    view                 = var.view
-    managementR          = var.managementR
-    managementA          = var.managementA
-    managementI          = var.managementI
-    developer            = var.developer
+
+module "conduit_azure" {
+    source                      = "../../azure/conduit_azure"
+    count                       = var.prov == "Azure" ? 1 : 0
+    resource_group_name         = var.tenant
+    mycompartments              = var.mycompartments
+    location                    = var.region
 }
+
