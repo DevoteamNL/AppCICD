@@ -33,7 +33,7 @@ func (r *projectResource) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 
-	resp.Diagnostics.Append(callProjectAPI(ctx, &data)...)
+	resp.Diagnostics.Append(CallProjectAPI(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -60,7 +60,7 @@ func (r *projectResource) Update(ctx context.Context, req resource.UpdateRequest
 		return
 	}
 
-	resp.Diagnostics.Append(callProjectAPI(ctx, &data)...)
+	resp.Diagnostics.Append(CallProjectAPI(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -88,8 +88,8 @@ func CallProjectAPI(ctx context.Context, project *resource_project.ProjectModel)
 		project.Name = types.StringNull()
 	}
 
-	if project.ProjectID.IsUnknown() {
-		project.ProjectID = types.StringNull()
+	if project.Id.IsUnknown() {
+		project.Id = types.StringNull()
 	}
 
 	if project.Path.IsUnknown() {
@@ -109,15 +109,15 @@ func CallProjectAPI(ctx context.Context, project *resource_project.ProjectModel)
 	}
 
 	if project.SceneHeight.IsUnknown() {
-		project.SceneHeight = types.IntNull()
+		project.SceneHeight = types.Int64Null()
 	}
 
 	if project.SceneWidth.IsUnknown() {
-		project.SceneWidth = types.IntNull()
+		project.SceneWidth = types.Int64Null()
 	}
 
 	if project.Zoom.IsUnknown() {
-		project.Zoom = types.IntNull()
+		project.Zoom = types.Int64Null()
 	}
 
 	if project.ShowLayers.IsUnknown() {
@@ -133,49 +133,49 @@ func CallProjectAPI(ctx context.Context, project *resource_project.ProjectModel)
 	}
 
 	if project.GridSize.IsUnknown() {
-		project.GridSize = types.IntNull()
+		project.GridSize = types.Int64Null()
 	}
 
 	if project.DrawingGridSize.IsUnknown() {
-		project.DrawingGridSize = types.IntNull()
+		project.DrawingGridSize = types.Int64Null()
 	}
 
 	if project.ShowInterfaceLabels.IsUnknown() {
 		project.ShowInterfaceLabels = types.BoolNull()
 	}
 
-	if project.Supplier.IsUnknown() {
-		project.Supplier = resource_project.SupplierValue{}.Type(ctx)
-	}
+	// if project.Supplier.IsUnknown() {
+	// 	project.Supplier = resource_project.SupplierValue{}.Type(ctx)
+	// }
 
-	if project.Variables.IsUnknown() {
-		project.Variables = types.ListNull(resource_project.VariableValue{}.Type(ctx))
-	} else if !project.Variables.IsNull() {
-		var variables []resource_project.VariableValue
-		diags := project.Variables.ElementsAs(ctx, &variables, false)
-		if diags.HasError() {
-			return diags
-		}
+	// if project.Variables.IsUnknown() {
+	// 	project.Variables = types.ListNull(resource_project.VariableValue{}.Type(ctx))
+	// } else if !project.Variables.IsNull() {
+	// 	var variables []resource_project.VariableValue
+	// 	diags := project.Variables.ElementsAs(ctx, &variables, false)
+	// 	if diags.HasError() {
+	// 		return diags
+	// 	}
 
-		for i := range variables {
-			if variables[i].Name.IsUnknown() {
-				variables[i].Name = types.StringNull()
-			}
+	// 	for i := range variables {
+	// 		if variables[i].Name.IsUnknown() {
+	// 			variables[i].Name = types.StringNull()
+	// 		}
 
-			if variables[i].Value.IsUnknown() {
-				variables[i].Value = types.StringNull()
-			}
-		}
+	// 		if variables[i].Value.IsUnknown() {
+	// 			variables[i].Value = types.StringNull()
+	// 		}
+	// 	}
 
-		project.Variables, diags = types.ListValueFrom(ctx, resource_project.VariableValue{}.Type(ctx), variables)
-		if diags.HasError() {
-			return diags
-		}
-	}
+	// 	project.Variables, diags = types.ListValueFrom(ctx, resource_project.VariableValue{}.Type(ctx), variables)
+	// 	if diags.HasError() {
+	// 		return diags
+	// 	}
+	// }
 
-	if project.Status.IsUnknown() {
-		project.Status = resource_project.ProjectStatusValue{}.Type(ctx)
-	}
+	// if project.Status.IsUnknown() {
+	// 	project.Status = resource_project.ProjectStatusValue{}.Type(ctx)
+	// }
 
 	if project.Filename.IsUnknown() {
 		project.Filename = types.StringNull()

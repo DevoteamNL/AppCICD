@@ -11,7 +11,8 @@ import (
 
 func main() {
     opts := providerserver.ServeOpts{
-        Address: "hashicorp.com/edu/gns3",
+        Address: "registry.terraform.io/devoteamnl/gns3",
+        Debug:   debug,
     }
 
     err := providerserver.Serve(context.Background(), provider.New(), opts)
